@@ -117,7 +117,7 @@ class Influencers:
 
         return subsampled_filename_list
 
-    # Copying the subsampled files into the destination folder
+    # Copy the subsampled files into the destination folder
     @staticmethod
     def copy_influencer_files(filenames, src_folder_base, dst_folder_base):
 
