@@ -156,6 +156,77 @@ class EyeClassifier:
 
         return eye_model
 
+    def train_model(self, eye_model, train_images, validation_images):
+        eye_model.compile(optimizer='adam',
+                          loss='binary_crossentropy',
+                          metrics=['accuracy'])
+
+        early_stop = EarlyStopping(monitor='val_loss', patience=10)
+
+        eye_history = eye_model.fit(train_images,
+                                    validation_data=validation_images,
+                                    epochs=150,
+                                    callbacks=[early_stop])
+        return eye_history
+
+    def visualize_accuracy_loss(self, eye_history):
+        acc = eye_history.history['accuracy']
+        val_acc = eye_history.history['val_accuracy']
+
+        loss = eye_history.history['loss']
+        val_loss = eye_history.history['val_loss']
+
+        epochs_range = range(len(acc))
+
+        plt.figure(figsize=(12, 8))
+        plt.subplot(2, 1, 1)
+        plt.plot(epochs_range, acc, label='Training Accuracy')
+        plt.plot(epochs_range, val_acc, label='Validation Accuracy')
+        plt.legend(loc='lower right')
+        plt.title('Training and Validation Accuracy')
+
+        plt.subplot(2, 1, 2)
+        plt.plot(epochs_range, loss, label='Training Loss')
+        plt.plot(epochs_range, val_loss, label='Validation Loss')
+        plt.legend(loc='upper right')
+        plt.title('Training and Validation Loss')
+
+        plt.show()
+
+    def prepare_test_image_dataset(self, test_eye_images, seed_value):
+        eye_test_images = tf.keras.preprocessing.image_dataset_from_directory(
+            test_eye_images,
+            labels='inferred',
+            label_mode='int',
+            class_names=['eye', 'not_eye'],
+            color_mode='rgb',
+            batch_size=self.batch_size,
+            image_size=(self.image_height, self.image_width),
+            shuffle=True,
+            seed=seed_value,
+            validation_split=None,
+            subset=None
+        )
+        return eye_test_images
+    
+    def test_classifier(self, eye_model, eye_test_images):
+        eye_predictions = eye_model.predict(eye_test_images)
+        print(eye_predictions)
+        return eye_predictions
+    
+    def show_classifier(self, eye_model, eye_test_images):
+        plt.figure(figsize=(14, 12))
+        for images, labels in eye_test_images.take(1):
+            for i in range(len(images)):
+                eye_prediction = eye_model.predict(tf.reshape(images[i], [-1, 50, 50, 3]))
+                ax = plt.subplot(6, 4, i + 1)
+                plt.imshow(images[i].numpy().astype("uint8"))
+                eye_label = 'not_eye' if eye_prediction[0][0] > 0.5 else 'eye'
+                image_title = eye_test_images.class_names[labels[i]]+' >> '+eye_label+' ('+str(round(eye_prediction[0][0], 2))+')'
+                plt.title(image_title)
+                plt.axis("off")
+        plt.show()
+
 
 if __name__ == "__main__":
 
@@ -167,6 +238,7 @@ if __name__ == "__main__":
 
     augmented_folder = '/Users/mshayganfar/Mahni_Folder/Mahni/Influencers/Beauty/augmented_images/'
     eye_images = '/Users/mshayganfar/Mahni_Folder/Mahni/Influencers/Beauty/Classes/Eye/'
+    test_eye_images = '/Users/mshayganfar/Mahni_Folder/Mahni/Influencers/Test/beauty/Eye/'
     image_path = eye_images+'eye/'
     image_name = 'small__themakeupdoll-1759665766548332840.jpg'
     num_rows = 5
@@ -177,7 +249,20 @@ if __name__ == "__main__":
 
     train_images, validation_images = eye_classifier.prepare_image_dataset(
         eye_images, 42, 0.25)
-    
+
     eye_model = eye_classifier.create_eye_model()
 
     print(eye_model.summary())
+
+    eye_history = eye_classifier.train_model(
+        eye_model, train_images, validation_images)
+
+    eye_classifier.visualize_accuracy_loss(eye_history)
+
+    eye_test_images = eye_classifier.prepare_test_image_dataset(test_eye_images, 42)
+
+    eye_classifier.test_classifier(eye_model, eye_test_images)
+
+    eye_classifier.show_classifier(eye_model, eye_test_images)
+
+
