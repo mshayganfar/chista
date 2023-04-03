@@ -154,18 +154,18 @@ class EyeClassifier:
         # LAST LAYER IS THE CLASSIFIER
         eye_model.add(Dense(1, activation='sigmoid'))
 
-        return eye_model
-
-    def train_model(self, eye_model, train_images, validation_images):
         eye_model.compile(optimizer='adam',
                           loss='binary_crossentropy',
                           metrics=['accuracy'])
 
+        return eye_model
+
+    def train_model(self, eye_model, train_images, validation_images, num_epochs):
         early_stop = EarlyStopping(monitor='val_loss', patience=10)
 
         eye_history = eye_model.fit(train_images,
                                     validation_data=validation_images,
-                                    epochs=150,
+                                    epochs=num_epochs,
                                     callbacks=[early_stop])
         return eye_history
 
@@ -208,21 +208,25 @@ class EyeClassifier:
             subset=None
         )
         return eye_test_images
-    
-    def test_classifier(self, eye_model, eye_test_images):
+
+    @classmethod
+    def test_classifier(cls, eye_model, eye_test_images):
         eye_predictions = eye_model.predict(eye_test_images)
         print(eye_predictions)
         return eye_predictions
-    
-    def show_classifier(self, eye_model, eye_test_images):
+
+    @classmethod
+    def show_results(cls, eye_model, eye_test_images):
         plt.figure(figsize=(14, 12))
         for images, labels in eye_test_images.take(1):
             for i in range(len(images)):
-                eye_prediction = eye_model.predict(tf.reshape(images[i], [-1, 50, 50, 3]))
+                eye_prediction = eye_model.predict(
+                    tf.reshape(images[i], [-1, 50, 50, 3]))
                 ax = plt.subplot(6, 4, i + 1)
                 plt.imshow(images[i].numpy().astype("uint8"))
                 eye_label = 'not_eye' if eye_prediction[0][0] > 0.5 else 'eye'
-                image_title = eye_test_images.class_names[labels[i]]+' >> '+eye_label+' ('+str(round(eye_prediction[0][0], 2))+')'
+                image_title = eye_test_images.class_names[labels[i]]+' >> '+eye_label+' ('+str(
+                    round(eye_prediction[0][0], 2))+')'
                 plt.title(image_title)
                 plt.axis("off")
         plt.show()
@@ -255,14 +259,17 @@ if __name__ == "__main__":
     print(eye_model.summary())
 
     eye_history = eye_classifier.train_model(
-        eye_model, train_images, validation_images)
+        eye_model, train_images, validation_images, 150)
 
     eye_classifier.visualize_accuracy_loss(eye_history)
 
-    eye_test_images = eye_classifier.prepare_test_image_dataset(test_eye_images, 42)
+    eye_test_images = eye_classifier.prepare_test_image_dataset(
+        test_eye_images, 42)
 
     eye_classifier.test_classifier(eye_model, eye_test_images)
 
-    eye_classifier.show_classifier(eye_model, eye_test_images)
+    eye_classifier.show_results(eye_model, eye_test_images)
 
+    eye_model.save_weights('weights/eye_weights.h5')
 
+    eye_model.save('models/eye_model.h5')
