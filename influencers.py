@@ -109,8 +109,13 @@ class Influencers:
 
         random.seed(self.seed_number)
 
-        random_numbers = random.sample(
-            range(0, len(filenames)-1), number_of_files)
+        try:
+            random_numbers = random.sample(
+                range(0, len(filenames)-1), number_of_files)
+        except ValueError:
+            print('The requested number is bigger than the length of filenames!')
+            random_numbers = random.sample(
+                range(0, len(filenames)), min(len(filenames), number_of_files))
 
         for file_index in random_numbers:
             subsampled_filename_list.append(filenames[file_index])

@@ -15,3 +15,8 @@ class TestInfluencers():
         subsampled_filename_list = influencers.get_influencr_random_subsampled_files(
             filenames, number_of_files)
         assert len(subsampled_filename_list) == 3
+
+        two_filenames = filenames[:2]
+        subsampled_filename_list = influencers.get_influencr_random_subsampled_files(
+            two_filenames, number_of_files)
+        assert len(subsampled_filename_list) == 2
