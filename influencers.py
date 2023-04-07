@@ -111,9 +111,9 @@ class Influencers:
 
         try:
             random_numbers = random.sample(
-                range(0, len(filenames)-1), number_of_files)
+                range(0, len(filenames)), number_of_files)
         except ValueError:
-            print('The requested number is bigger than the length of filenames!')
+            print('WARNING: The requested number is bigger than the length of filenames!')
             random_numbers = random.sample(
                 range(0, len(filenames)), min(len(filenames), number_of_files))
 
