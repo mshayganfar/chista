@@ -1,13 +1,11 @@
 from flask import app, Flask, flash, redirect, render_template, request, url_for
-from keras.models import load_model
 import os
+from process_image import Beauty
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.secret_key = "temp12345"
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'
-
-#saved_eye_model = load_model('models/eye_model.h5')
 
 
 @app.route('/')
@@ -31,6 +29,11 @@ def upload_image_api():
         app.config['UPLOAD_FOLDER'], uploaded_filename))
 
     flash('Image was successfully uploaded and desplayed below:')
+
+    beauty = Beauty()
+    predictions = beauty.classify_image_category(
+        app.config['UPLOAD_FOLDER'], uploaded_filename)
+    print(predictions)
 
     return render_template('index.html', filename=uploaded_filename)
 
