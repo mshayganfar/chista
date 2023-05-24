@@ -35,15 +35,21 @@ def upload_image_api():
         app.config['UPLOAD_FOLDER'], uploaded_filename)
     predictions.sort(key=lambda x: x[0], reverse=True)
     beauty_flag = False
+    possibilities = []
     for pred_tuple in predictions:
         if pred_tuple[0] > 0.50:
             beauty_flag = True
-            print(pred_tuple[1])
+            possibilities.append(pred_tuple[1])
+            print(pred_tuple[0], pred_tuple[1])
 
     if beauty_flag == False:
-        print("Not Beauty!")
+        print(predictions)
+        return render_template('index.html', filename=uploaded_filename, predition_result="Not Beauty!")
+    else:
+        return render_template('index.html', filename=uploaded_filename, predition_result="Beauty!", possibilities=possibilities)
 
-    return render_template('index.html', filename=uploaded_filename)
+    # return render_template('index.html', filename=uploaded_filename, predition_result="<h2>Not Beauty!</h2>")
+# <p>"+possible+"</p>"
 
 
 @app.route('/display/<filename>')

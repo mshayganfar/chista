@@ -25,6 +25,18 @@
   </div>
   {% endif %}
 
+  {% if predition_result %}
+  <div>
+    <h2>{{ predition_result }}</h2>
+  </div>
+  {% endif %}
+
+  {% if possibilities %}
+  <div>
+    <h3>Possibilities: {{ possibilities }}</h3>
+  </div>
+  {% endif %}
+
   <form method="post" action="/" enctype="multipart/form-data">
     <dl>
       <p>
