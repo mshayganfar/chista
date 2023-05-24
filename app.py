@@ -33,7 +33,15 @@ def upload_image_api():
     beauty = Beauty()
     predictions = beauty.classify_image_category(
         app.config['UPLOAD_FOLDER'], uploaded_filename)
-    print(predictions)
+    predictions.sort(key=lambda x: x[0], reverse=True)
+    beauty_flag = False
+    for pred_tuple in predictions:
+        if pred_tuple[0] > 0.50:
+            beauty_flag = True
+            print(pred_tuple[1])
+
+    if beauty_flag == False:
+        print("Not Beauty!")
 
     return render_template('index.html', filename=uploaded_filename)
 
