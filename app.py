@@ -48,9 +48,6 @@ def upload_image_api():
     else:
         return render_template('index.html', filename=uploaded_filename, predition_result="Beauty!", possibilities=possibilities)
 
-    # return render_template('index.html', filename=uploaded_filename, predition_result="<h2>Not Beauty!</h2>")
-# <p>"+possible+"</p>"
-
 
 @app.route('/display/<filename>')
 def display_image(filename):
