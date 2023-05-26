@@ -19,6 +19,7 @@ class Beauty:
 
         image = cv2.imread(image_file)
         image = cv2.resize(image, (50, 50))
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         image = tf.expand_dims(image, 0)
 
         eye_prediction = self.eye_model.predict(image)

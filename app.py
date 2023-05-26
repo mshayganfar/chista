@@ -37,7 +37,7 @@ def upload_image_api():
     beauty_flag = False
     possibilities = []
     for pred_tuple in predictions:
-        if pred_tuple[0] > 0.50:
+        if pred_tuple[0] > 0.80:
             beauty_flag = True
             possibilities.append(pred_tuple[1])
             print(pred_tuple[0], pred_tuple[1])
