@@ -3,7 +3,7 @@ import os
 from process_image import Beauty
 from werkzeug.utils import secure_filename
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates', static_folder='static')
 app.secret_key = "temp12345"
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 

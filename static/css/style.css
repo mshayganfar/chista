@@ -1,0 +1,193 @@
+#main {
+  position: absolute;
+  border: 1px solid black;
+  margin: 100px auto auto auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 800px;
+  height: 550px;
+  text-align: center;
+  justify-content: center;
+  background-color: rgb(250, 240, 240);
+}
+
+#main h2 {
+  color: darkred;
+}
+
+/*#main #message {
+  position: absolute;
+  bottom: 200px;
+  //border: 1px solid black;
+  color: maroon;
+  text-align: center;
+  font-size: 12px;
+  width: 800px;
+  height: 25px;
+  margin: auto;
+}
+
+#main_allwords #message {
+  position: absolute;
+  top: 200px;
+  //border: 1px solid black;
+  color: maroon;
+  text-align: center;
+  font-size: 12px;
+  width: 800px;
+  height: 25px;
+  margin: auto;
+}
+
+#main #result {
+  position: absolute;
+  bottom: 0px;
+  //border: 1px solid black;
+  color: maroon;
+  text-align: left;
+  font-size: 12px;
+  width: 800px;
+  height: 200px;
+  font-size: 16px;
+  color: #995555;
+}
+
+#main_allwords #result {
+  position: absolute;
+  top: 250px;
+  //border: 1px solid black;
+  color: maroon;
+  text-align: left;
+  font-size: 12px;
+  width: 800px;
+  font-size: 16px;
+  color: #995555;
+  height: auto;
+  min-height: 30px;
+  height: auto !important;
+  height: 30px;
+}
+
+#main #search {
+  display: block;
+  //border: 1px solid black;
+  color: maroon;
+  text-align: center;
+  width: 500px;
+  height: 25px;
+  margin: auto;
+  padding: 25px;
+}
+
+#main #insert {
+  display: block;
+  //border: 1px solid black;
+  color: maroon;
+  text-align: left;
+  justify-content: left;
+  width: 600px;
+  height: 100px;
+  margin: auto;
+  padding: 15px;
+}
+
+#main #insert #data label {
+  display: inline-block;
+  color: maroon;
+  width: 150px;
+  text-align: right;
+}
+
+#main #search #data label {
+  display: inline-block;
+  color: maroon;
+  width: 75px;
+  text-align: right;
+}
+
+#main #insert #data div {
+  padding: 2px;
+}
+
+#data {
+  font-size: 18px;
+}
+
+.insert {
+  position: relative;
+  left: 77%;
+}
+
+.logo {
+  background-image: url(/images/logo.png) no-repeat;
+  width: 200px;
+  height: 185px;
+  object-fit: fill;
+  padding: 5px;
+}
+
+.text {
+  width: 250px;
+  height: 25px;
+  background-color: #fff7f7;
+  font-size: 18px;
+  border: 1px solid maroon;
+}
+
+.long_text {
+  width: 400px;
+  height: 25px;
+  background-color: #fff7f7;
+  font-size: 18px;
+  border: 1px solid maroon;
+}
+
+input[type=button],
+input[type=submit],
+input[type=reset] {
+  background-color: #fff7f7;
+  border: 1px solid maroon;
+  color: maroon;
+  padding: 5px 15px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.here {
+  text-decoration: underline;
+  font-weight: bold;
+  font-color: maroon;
+}
+
+body {
+  background-color: white;
+  font-family: verdana;
+  font-size: 14px;
+}
+
+label {
+  display: inline-block;
+  width: 150px;
+  text-align: right;
+}
+
+a:link {
+  color: maroon;
+}
+
+a:visited {
+  color: maroon;
+}
+
+a:hover {
+  color: maroon;
+}
+
+a:active {
+  color: maroon;
+} */

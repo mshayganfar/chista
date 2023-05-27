@@ -3,50 +3,53 @@
 
 <head>
   <title>Semantic Image Understanding</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 
 <body>
-  <h2>Select a file to upload</h2>
-  <p>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-  <ul>
-    {% for message in messages %}
-    <li>{{ message }}</li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-  {% endwith %}
-  </p>
-
-  {% if filename %}
-  <div>
-    <img src="{{ url_for('display_image', filename=filename) }}">
-  </div>
-  {% endif %}
-
-  {% if predition_result %}
-  <div>
-    <h2>{{ predition_result }}</h2>
-  </div>
-  {% endif %}
-
-  {% if possibilities %}
-  <div>
-    <h3>Possibilities: {{ possibilities }}</h3>
-  </div>
-  {% endif %}
-
-  <form method="post" action="/" enctype="multipart/form-data">
-    <dl>
-      <p>
-        <input type="file" name="uploaded_file" autocomplete="off" required>
-      </p>
-    </dl>
+  <div id="main">
+    <h2>Select a file to upload</h2>
     <p>
-      <input type="submit" value="Submit">
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+    <ul>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
     </p>
-  </form>
+
+    {% if filename %}
+    <div>
+      <img src="{{ url_for('display_image', filename=filename) }}">
+    </div>
+    {% endif %}
+
+    {% if predition_result %}
+    <div>
+      <h2>{{ predition_result }}</h2>
+    </div>
+    {% endif %}
+
+    {% if possibilities %}
+    <div>
+      <h3>Possibilities: {{ possibilities }}</h3>
+    </div>
+    {% endif %}
+
+    <form method="post" action="/" enctype="multipart/form-data">
+      <dl>
+        <p>
+          <input type="file" name="uploaded_file" autocomplete="off" required>
+        </p>
+      </dl>
+      <p>
+        <input type="submit" value="Submit">
+      </p>
+    </form>
+  </div>
 </body>
 
 </html>
