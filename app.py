@@ -1,11 +1,14 @@
 from flask import app, Flask, flash, redirect, render_template, request, url_for
 import os
+from PIL import Image
 from process_image import Beauty
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 app.secret_key = "temp12345"
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'
+
+beauty = Beauty()
 
 
 @app.route('/')
@@ -25,12 +28,16 @@ def upload_image_api():
         return redirect(request.url)
 
     uploaded_filename = secure_filename(uploaded_file.filename)
-    uploaded_file.save(os.path.join(
-        app.config['UPLOAD_FOLDER'], uploaded_filename))
+    uploaded_file_path = os.path.join(
+        app.config['UPLOAD_FOLDER'], uploaded_filename)
+    uploaded_file.save(uploaded_file_path)
 
-    flash('Image was successfully uploaded and desplayed below:')
+    saved_image = Image.open(uploaded_file_path)
+    resized_image = saved_image.resize((50, 50))
+    resized_image.save(uploaded_file_path)
 
-    beauty = Beauty()
+    flash('Uploaded image:', 'message')
+
     predictions = beauty.classify_image_category(
         app.config['UPLOAD_FOLDER'], uploaded_filename)
     predictions.sort(key=lambda x: x[0], reverse=True)

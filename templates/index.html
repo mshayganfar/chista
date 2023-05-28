@@ -8,22 +8,20 @@
 
 <body>
   <div id="main">
-    <h2>Select a file to upload</h2>
+    <h2>Beauty Image Classification</h2>
     <p>
-      {% with messages = get_flashed_messages() %}
+      {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
-    <ul>
-      {% for message in messages %}
-      <li>{{ message }}</li>
-      {% endfor %}
-    </ul>
+      {% for category, message in messages %}
+    <p class="{{ category }}">{{ message }}</p>
+    {% endfor %}
     {% endif %}
     {% endwith %}
     </p>
 
     {% if filename %}
     <div>
-      <img src="{{ url_for('display_image', filename=filename) }}">
+      <img src="{{ url_for('display_image', filename=filename) }}" class="query">
     </div>
     {% endif %}
 
@@ -35,20 +33,25 @@
 
     {% if possibilities %}
     <div>
-      <h3>Possibilities: {{ possibilities }}</h3>
+      <span class="caption">Possibilities:</span>
+      <span class="possibilities">
+        {{ ','.join(possibilities) }}
+      </span>
     </div>
     {% endif %}
 
-    <form method="post" action="/" enctype="multipart/form-data">
-      <dl>
+    <div id="submission">
+      <form method="post" action="/" enctype="multipart/form-data">
+        <dl>
+          <p>
+            <input type="file" name="uploaded_file" autocomplete="off" required>
+          </p>
+        </dl>
         <p>
-          <input type="file" name="uploaded_file" autocomplete="off" required>
+          <input type="submit" value="Submit">
         </p>
-      </dl>
-      <p>
-        <input type="submit" value="Submit">
-      </p>
-    </form>
+      </form>
+    </div>
   </div>
 </body>
 
