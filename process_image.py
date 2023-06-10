@@ -12,6 +12,7 @@ class Beauty:
         self.lips_model = load_model('models/lips_model.h5')
         self.nail_model = load_model('models/nail_model.h5')
         self.products_model = load_model('models/products_model.h5')
+        self.dog_model = load_model('models/dog_model.h5')
 
     # Classify the input image category and return top three sub-categories and their probabilities
     def classify_image_category(self, image_path, image_filename):
@@ -28,6 +29,7 @@ class Beauty:
         lips_prediction = self.lips_model.predict(image)
         nail_prediction = self.nail_model.predict(image)
         product_prediction = self.products_model.predict(image)
+        dog_prediction = self.dog_model.predict(image)
 
         models_results = []
 
@@ -38,5 +40,6 @@ class Beauty:
         models_results.append((round(1.0 - nail_prediction[0][0], 3), 'nail'))
         models_results.append(
             (round(1.0 - product_prediction[0][0], 3), 'product'))
+        models_results.append((round(1.0 - dog_prediction[0][0], 3), 'dog'))
 
         return models_results
