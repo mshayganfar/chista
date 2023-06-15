@@ -51,9 +51,9 @@ def upload_image_api():
 
     if beauty_flag == False:
         print(predictions)
-        return render_template('index.html', filename=uploaded_filename, predition_result="Not Beauty or Pet!")
+        return render_template('index.html', filename=uploaded_filename, predition_result="Not Beauty!")
     else:
-        return render_template('index.html', filename=uploaded_filename, predition_result="Beauty or Pet!", possibilities=possibilities)
+        return render_template('index.html', filename=uploaded_filename, predition_result="Beauty!", possibilities=possibilities)
 
 
 @app.route('/display/<filename>')
